@@ -51,6 +51,6 @@ public class Pedido {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @Builder.Default
+    //@Builder.Default
     private List<DetallePedido> detalles = new ArrayList<>();
 }

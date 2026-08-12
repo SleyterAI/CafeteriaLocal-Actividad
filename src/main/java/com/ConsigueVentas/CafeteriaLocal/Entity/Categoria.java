@@ -24,6 +24,5 @@ public class Categoria {
     private String nombre;
 
     @OneToMany(mappedBy = "categoria")
-    @Builder.Default
     private List<Producto> productos = new ArrayList<>();
 }

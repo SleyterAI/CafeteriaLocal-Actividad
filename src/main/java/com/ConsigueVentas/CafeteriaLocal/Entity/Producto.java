@@ -43,6 +43,6 @@ public class Producto {
     private Categoria categoria;
 
     @OneToMany(mappedBy = "producto")
-    @Builder.Default
+    //@Builder.Default
     private List<DetallePedido> detalles = new ArrayList<>();
 }
