@@ -56,4 +56,14 @@ public class PedidoService implements IPedidoService {
         }
         pedidoRepository.deleteById(id);
     }
+
+    public Pedido cambiarEstado(Long id, String nuevoEstado) {
+
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        pedido.setEstado(nuevoEstado);
+
+        return pedidoRepository.save(pedido);
+    }
 }

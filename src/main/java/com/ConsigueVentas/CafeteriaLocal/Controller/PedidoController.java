@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Controller;
 
+import com.ConsigueVentas.CafeteriaLocal.Dto.PedidoResponseDto;
 import com.ConsigueVentas.CafeteriaLocal.Entity.Pedido;
 import com.ConsigueVentas.CafeteriaLocal.Service.PedidoService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> createStudent(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> createPedido(@RequestBody Pedido pedido) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(pedidoService.createPedido(pedido));
     }
@@ -32,6 +33,15 @@ public class PedidoController {
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> getPedidoById(@PathVariable Long id) {
         return ResponseEntity.ok(pedidoService.getPedidoById(id));
+    }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<Pedido> cambiarEstado(
+            @PathVariable Long id, @RequestBody PedidoResponseDto nuevoEstado) {
+
+        Pedido pedido = pedidoService.cambiarEstado(id, nuevoEstado.getEstado());
+
+        return ResponseEntity.ok(pedido);
     }
 
 }

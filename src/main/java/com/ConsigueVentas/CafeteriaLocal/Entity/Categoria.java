@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class Categoria {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos = new ArrayList<>();
 }
