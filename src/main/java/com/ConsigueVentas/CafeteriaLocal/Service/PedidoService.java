@@ -143,12 +143,9 @@ public class PedidoService implements IPedidoService {
         Integer cantidad = detalleDto.getCantidad();
 
         if (producto.getStock() < cantidad) {
-            throw new RuntimeException(
-                    "Stock insuficiente para el producto: " + producto.getNombre()
-                            + ". Stock disponible: " + producto.getStock()
-                            + ", cantidad solicitada: " + cantidad);
+            throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre()
+            + ". Stock disponible: " + producto.getStock() + ", cantidad solicitada: " + cantidad);
         }
-
         return producto;
     }
 }
