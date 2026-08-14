@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,14 +36,14 @@ public class Producto {
     @Column(nullable = false, name = "imagen_url", length = 255)
     private String imageUrl;
 
-    @Column(nullable = false, length = 100)
-    private String activo;
+    @Column(nullable = false)
+    private Boolean activo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     @OneToMany(mappedBy = "producto")
-    //@Builder.Default
+    @JsonIgnore
     private List<DetallePedido> detalles = new ArrayList<>();
 }

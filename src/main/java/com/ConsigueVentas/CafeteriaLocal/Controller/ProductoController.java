@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Controller;
 
+
 import com.ConsigueVentas.CafeteriaLocal.Entity.Producto;
 import com.ConsigueVentas.CafeteriaLocal.Service.ProductoService;
 import jakarta.validation.Valid;
@@ -27,11 +28,10 @@ public class ProductoController {
 
     @GetMapping
     public ResponseEntity<List<Producto>> getAllProducto(
-            @RequestParam(required = false) Long categoria) {
-        if (categoria != null) {
-            return ResponseEntity.ok(productoService.findByCategoriaId(categoria));
-        }
-        return ResponseEntity.ok(productoService.getAllProducto());
+            @RequestParam(required = false) String nombreCategoria,
+            @RequestParam(required = false) Boolean activo) {
+
+        return ResponseEntity.ok(productoService.filtrarProductos(nombreCategoria, activo));
     }
 
     @GetMapping("/{id}")
@@ -43,6 +43,15 @@ public class ProductoController {
     public ResponseEntity<Producto> updateProducto(
             @PathVariable Long id, @Valid @RequestBody Producto producto) {
         return ResponseEntity.ok(productoService.updateProducto(id, producto));
+    }
+
+    @PatchMapping("/{id}/activo")
+    public ResponseEntity<Producto> cambiarActivo(
+            @PathVariable Long id, @RequestBody Producto nuevoActivo) {
+
+        Producto producto = productoService.cambiarActivo(id, nuevoActivo.getActivo());
+
+        return ResponseEntity.ok(producto);
     }
 
     @DeleteMapping("/{id}")

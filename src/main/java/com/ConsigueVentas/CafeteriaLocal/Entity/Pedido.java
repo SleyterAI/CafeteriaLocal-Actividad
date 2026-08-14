@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,6 @@ public class Pedido {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    //@Builder.Default
+    @JsonManagedReference
     private List<DetallePedido> detalles = new ArrayList<>();
 }

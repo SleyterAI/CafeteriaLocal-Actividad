@@ -1,5 +1,7 @@
 package com.ConsigueVentas.CafeteriaLocal.Controller;
 
+import com.ConsigueVentas.CafeteriaLocal.Dto.DetallePedidoResponseDto;
+import com.ConsigueVentas.CafeteriaLocal.Dto.PedidoRequestDto;
 import com.ConsigueVentas.CafeteriaLocal.Dto.PedidoResponseDto;
 import com.ConsigueVentas.CafeteriaLocal.Entity.Pedido;
 import com.ConsigueVentas.CafeteriaLocal.Service.PedidoService;
@@ -20,9 +22,10 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> createPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<PedidoResponseDto> createPedido(@RequestBody PedidoRequestDto pedidoRequestDto) {
+        Pedido pedido = pedidoService.createPedido(pedidoRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(pedidoService.createPedido(pedido));
+                .body(toResponse(pedido));
     }
 
     @GetMapping
@@ -42,6 +45,33 @@ public class PedidoController {
         Pedido pedido = pedidoService.cambiarEstado(id, nuevoEstado.getEstado());
 
         return ResponseEntity.ok(pedido);
+    }
+
+    private PedidoResponseDto toResponse(Pedido pedido){
+        PedidoResponseDto pedidoResponseDto = new PedidoResponseDto();
+        pedidoResponseDto.setClienteNombre(pedido.getClienteNombre());
+        pedidoResponseDto.setCelular(pedido.getCelular());
+        pedidoResponseDto.setDireccion(pedido.getDireccion());
+        pedidoResponseDto.setFecha(pedido.getFecha());
+        pedidoResponseDto.setEstado(pedido.getEstado());
+        pedidoResponseDto.setTotal(pedido.getTotal());
+
+        List<DetallePedidoResponseDto> detalles =
+                pedido.getDetalles()
+                .stream()
+                .map(detalle -> {
+                    DetallePedidoResponseDto detalleResponse =
+                            new DetallePedidoResponseDto();
+
+                    detalleResponse.setProductoId(detalle.getProducto().getId());
+                    detalleResponse.setProductoNombre(detalle.getProducto().getNombre());
+                    detalleResponse.setCantidad(detalle.getCantidad());
+                    detalleResponse.setPrecioUnitario(detalle.getPrecioUnitario());
+                    detalleResponse.setSubTotal(detalle.getSubTotal());
+                    return detalleResponse;})
+                .toList();
+        pedidoResponseDto.setDetalles(detalles);
+        return pedidoResponseDto;
     }
 
 }

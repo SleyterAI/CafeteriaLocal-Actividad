@@ -26,23 +26,23 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> getAllStudent() {
+    public ResponseEntity<List<Categoria>> getAllCategoria() {
 
         return ResponseEntity.ok(categoriaService.getAllCategoria());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getStudentById(@PathVariable Long id) {
+    public ResponseEntity<Categoria> getCategoriaById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.getCategoriaoById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateStudent(@PathVariable Long id, @RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
         return ResponseEntity.ok(categoriaService.updateCategoria(id, categoria));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
         categoriaService.deleteCategoria(id);
         return ResponseEntity.noContent().build();
     }

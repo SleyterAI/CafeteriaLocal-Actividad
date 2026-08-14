@@ -1,5 +1,6 @@
 package com.ConsigueVentas.CafeteriaLocal.Service;
 
+import com.ConsigueVentas.CafeteriaLocal.Entity.Pedido;
 import com.ConsigueVentas.CafeteriaLocal.Entity.Producto;
 import com.ConsigueVentas.CafeteriaLocal.Repository.ProductoRepository;
 import com.ConsigueVentas.CafeteriaLocal.Service.Interface.IProductoService;
@@ -59,7 +60,25 @@ public class ProductoService implements IProductoService {
         productoRepository.deleteById(id);
     }
 
-    public List<Producto> findByCategoriaId(Long categoriaId) {
-        return productoRepository.findByCategoriaId(categoriaId);
+
+    public List<Producto> filtrarProductos(String nombreCategoria, Boolean activo) {
+        if (nombreCategoria != null && activo != null) {
+            return productoRepository.findByCategoria_NombreAndActivo(nombreCategoria, activo);
+        } else if (nombreCategoria != null) {
+            return productoRepository.findByCategoria_Nombre(nombreCategoria);
+        } else if (activo != null) {
+            return productoRepository.findByActivo(activo);
+        }
+        return productoRepository.findAll();
+    }
+
+    public Producto cambiarActivo(Long id, Boolean nuevoActivo) {
+
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        producto.setActivo(nuevoActivo);
+
+        return productoRepository.save(producto);
     }
 }
