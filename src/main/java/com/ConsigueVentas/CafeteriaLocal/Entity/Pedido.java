@@ -27,7 +27,7 @@ public class Pedido {
     @Column(nullable = false, length = 100)
     private String clienteNombre;
 
-    @Column(unique = true, nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     @Pattern(
             regexp = "^[0-9]{9}$",
             message = "El celular debe tener 9 dígitos"

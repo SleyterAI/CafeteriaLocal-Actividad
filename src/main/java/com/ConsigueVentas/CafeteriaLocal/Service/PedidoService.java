@@ -35,6 +35,14 @@ public class PedidoService implements IPedidoService {
     @Transactional
     public Pedido createPedido(PedidoRequestDto pedidoRequest) {
 
+        if (pedidoRequest.getDetallePedidoRequestDto() == null ||
+                pedidoRequest.getDetallePedidoRequestDto().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "El pedido debe tener al menos un producto"
+            );
+        }
+
         Pedido pedido = new Pedido();
 
         //datos q vienen del request
@@ -52,7 +60,7 @@ public class PedidoService implements IPedidoService {
         //recorrido de la lista detallePedidoRequestDto que se encuentra en pedidoRequest
         for (DetallePedidoRequestDto detallePedidoRequestDto : pedidoRequest.getDetallePedidoRequestDto()) {
 
-            //guardar producto y validar stock
+            //guardar producto, validar producto y stock
             Producto producto = obtenerProductoYValidarStock(detallePedidoRequestDto);
 
             Integer cantidad = detallePedidoRequestDto.getCantidad();
@@ -142,10 +150,12 @@ public class PedidoService implements IPedidoService {
 
         Integer cantidad = detalleDto.getCantidad();
 
-        if (producto.getStock() < cantidad) {
+        if (producto.getStock() < cantidad || detalleDto.getCantidad() == 0) {
             throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre()
             + ". Stock disponible: " + producto.getStock() + ", cantidad solicitada: " + cantidad);
         }
+
+
         return producto;
     }
 }
