@@ -35,14 +35,6 @@ public class PedidoService implements IPedidoService {
     @Transactional
     public Pedido createPedido(PedidoRequestDto pedidoRequest) {
 
-        if (pedidoRequest.getDetallePedidoRequestDto() == null ||
-                pedidoRequest.getDetallePedidoRequestDto().isEmpty()) {
-
-            throw new IllegalArgumentException(
-                    "El pedido debe tener al menos un producto"
-            );
-        }
-
         Pedido pedido = new Pedido();
 
         //datos q vienen del request
@@ -52,7 +44,7 @@ public class PedidoService implements IPedidoService {
 
         //datos backend no request
         pedido.setFecha(LocalDate.now());
-        pedido.setEstado("PENDIENTE");
+        pedido.setEstado("Pendiente");
 
         //se crea el total tipo BigDecimal
         BigDecimal total = BigDecimal.ZERO;

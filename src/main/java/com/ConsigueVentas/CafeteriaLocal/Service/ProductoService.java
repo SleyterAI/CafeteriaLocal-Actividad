@@ -47,7 +47,7 @@ public class ProductoService implements IProductoService {
         productoUpdate.setStock(producto.getStock());
         productoUpdate.setImageUrl(producto.getImageUrl());
         productoUpdate.setActivo(producto.getActivo());
-        productoUpdate.setCategoria(producto.getCategoria());
+        productoUpdate.setCategoria(producto.getCategoria() );
 
         return productoRepository.save(productoUpdate);
     }

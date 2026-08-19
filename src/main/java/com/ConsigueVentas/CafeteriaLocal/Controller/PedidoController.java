@@ -5,6 +5,7 @@ import com.ConsigueVentas.CafeteriaLocal.Dto.PedidoRequestDto;
 import com.ConsigueVentas.CafeteriaLocal.Dto.PedidoResponseDto;
 import com.ConsigueVentas.CafeteriaLocal.Entity.Pedido;
 import com.ConsigueVentas.CafeteriaLocal.Service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,9 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoResponseDto> createPedido(@RequestBody PedidoRequestDto pedidoRequestDto) {
+    public ResponseEntity<PedidoResponseDto> createPedido(@Valid @RequestBody PedidoRequestDto pedidoRequestDto) {
         Pedido pedido = pedidoService.createPedido(pedidoRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(toResponse(pedido));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(pedido));
     }
 
     @GetMapping

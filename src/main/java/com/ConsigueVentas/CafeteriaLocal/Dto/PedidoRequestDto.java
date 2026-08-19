@@ -24,7 +24,6 @@ public class PedidoRequestDto {
     @NotBlank
     private String direccion;
 
-    @NotEmpty
-    @Valid
-    private List<DetallePedidoRequestDto> detallePedidoRequestDto = new ArrayList<>();
+    @NotEmpty(message = "El pedido debe tener al menos un producto")
+    private List<@Valid DetallePedidoRequestDto> detallePedidoRequestDto = new ArrayList<>();
 }

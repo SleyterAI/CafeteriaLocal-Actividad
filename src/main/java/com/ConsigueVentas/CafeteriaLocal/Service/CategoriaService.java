@@ -38,8 +38,7 @@ public class CategoriaService implements ICategoriaService {
     public Categoria updateCategoria(Long id, Categoria categoria) {
         Categoria categoriaUpdate = categoriaRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("La categoria no existe")
-                );
+                        new RuntimeException("La categoria no existe"));
         categoriaUpdate.setNombre(categoria.getNombre());
         return categoriaRepository.save(categoriaUpdate);
     }
